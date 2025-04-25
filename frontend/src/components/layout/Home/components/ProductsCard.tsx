@@ -9,13 +9,17 @@ interface ProductsCardProp {
 
 const ProductsCard: React.FC<ProductsCardProp> = ({ text, description, icon, isLast = false }) => {
     return (
-        <div className="group">
-            <div className="flex flex-col items-start gap-4 p-6">
-                <div className="text-2xl text-primary">{icon}</div>
-                <h3 className="text-xl font-semibold">{text}</h3>
-                <p className="text-gray-600">{description}</p>
+        <div className="group flex">
+            <div className="flex flex-col items-start gap-4 p-6 w-full">
+                <div className="text-2xl w-full text-primary items-center flex justify-center" >
+                    <div>
+                        <div className=" p-2 bg-[#CAFF33] rounded-full ">{icon}</div>
+                    </div>
+                </div>
+                <h3 className="text-center w-full text-xl font-semibold">{text}</h3>
+                <p >{description}</p>
             </div>
-            {!isLast && <div className="h-px w-full bg-gray-200"></div>}
+            {!isLast && <div className="h-full w-px bg-gray-200"></div>}
         </div>
     )
 }

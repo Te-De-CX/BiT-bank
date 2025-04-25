@@ -18,7 +18,7 @@ const Cases = () => {
     return (
         <section className="max-w-6xl mx-auto px-4 py-16">
             <div className="text-center mb-12">
-                <h4 className="text-3xl font-bold mb-4">Use Cases</h4>
+                <h4 className="text-3xl font-bold mb-4">Use <span className="primary" >Cases</span></h4>
                 <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                     At bit bank, we cater to the diverse needs of individuals and businesses alike, 
                     offering a wide range of financial solutions
@@ -30,7 +30,7 @@ const Cases = () => {
                 <div className="lg:w-1/2 grid grid-cols-2 gap-6">
                     {cases.map(value => (
                         <div key={value.id} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-                            <div className="text-blue-600 mb-3">{value.icon}</div>
+                            <div className="primary mb-3">{value.icon}</div>
                             <h3 className="font-medium text-lg">{value.text}</h3>
                         </div>
                     ))}
@@ -45,7 +45,7 @@ const Cases = () => {
                     <div className="space-y-6 mb-8">
                         {percent.map(value => (
                             <div key={value.id} className="flex items-start gap-4">
-                                <div className="text-blue-600 mt-1">{value.icon}</div>
+                                <div className="primary mt-1">{value.icon}</div>
                                 <div>
                                     <h4 className="text-3xl font-bold text-gray-800">{value.numb}%</h4>
                                     <p className="text-gray-600">{value.text}</p>
@@ -64,7 +64,7 @@ const Cases = () => {
                 <div className="lg:w-1/2 grid grid-cols-2 gap-6">
                     {cases.map(value => (
                         <div key={value.id} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-                            <div className="text-blue-600 mb-3">{value.icon}</div>
+                            <div className="primary mb-3">{value.icon}</div>
                             <h3 className="font-medium text-lg">{value.text}</h3>
                         </div>
                     ))}

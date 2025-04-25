@@ -29,10 +29,10 @@ const Products = () => {
     return (
         <section className="max-w-6xl mx-auto px-4 py-12">
             <div className="mb-12">
-                <h4 className="headers">our products</h4>
+                <h4 className="headers">our <span className="text-[#CAFF33]" >products</span></h4>
                 <div className="flex flex-col md:flex-row justify-between gap-8">
-                    <div className="md:w-1/2">
-                        <p className="text-lg text-gray-600 mb-6">
+                    <div className=" flex items-center">
+                        <p className="text-sm text-gray-600 mb-6 w-8/12">
                             discover a range of comprehensive and customizable banking products of bit bank, 
                             designed to suit your unique financial needs and aspirations
                         </p>
@@ -44,14 +44,14 @@ const Products = () => {
                 </div>
             </div>
             
-            <div className="border flex border-gray-200 rounded-lg overflow-hidden">
+            <div className="flex rounded-lg overflow-hidden">
                 {data.map((value, index) => (
                     <ProductsCard 
                         key={value.id}
                         icon={value.icon} 
                         text={value.text} 
                         description={value.description}
-                        isLast={index === data.length - 1} // Only pass true for the last item
+                        isLast={index === data.length - 1}
                     />
                 ))}
             </div>

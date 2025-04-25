@@ -24,3 +24,7 @@ body {
   font-weight: 600;
   text-transform: capitalize;
 }
+
+.primary{
+  color: #CAFF33;
+}

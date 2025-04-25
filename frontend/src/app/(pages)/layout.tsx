@@ -7,7 +7,9 @@ const PagesLayout = ({ children }: Readonly<{ children: React.ReactNode;}>) => {
     return (
         <>
             <Nav />
-            {children}
+            <div className="px-20" >
+                {children}
+            </div>
             <Footer />
         </>
     )

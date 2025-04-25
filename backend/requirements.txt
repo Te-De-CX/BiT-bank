@@ -1,0 +1,24 @@
+# Core Django
+django==5.0.6
+djangorestframework==3.15.1
+djangorestframework-simplejwt==5.3.1
+django-allauth==0.58.2
+
+# Security
+django-cryptography==1.0
+django-axes==6.0.0
+django-ratelimit==3.0.1
+django-recaptcha==3.0.0
+
+# API & Performance
+redis==5.0.1
+celery==5.3.6
+django-cacheops==7.1
+
+# Banking
+django-money==3.1
+stripe==8.0.0
+
+# Compliance
+django-auditlog==2.3.0
+sentry-sdk==1.40.6

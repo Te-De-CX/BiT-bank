@@ -1,0 +1,28 @@
+//Authentication & Authorization
+django-allauth
+django-rest-framework
+djangorestframework-simplejwt
+django-cors-headers
+//Data Protection
+django-cryptography
+django-encrypted-model-fields
+python-gnupg
+//Threat Mitigation
+django-ratelimit
+django-axes
+django-recaptcha
+//API Security
+drf-yasg or spectacular
+django-filter
+//Performance & Scalability
+redis
+celery
+django-cacheops
+//Financial Features
+django-money
+python-stripe
+django-plaid
+//Compliance & Logging
+django-auditlog
+django-admin-honeypot
+sentry-sdk

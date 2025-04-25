@@ -1,17 +1,14 @@
-'use client'
 
 interface ButtonProp {
+    text: string,
     style: string,
-    text: string
 }
 
-const Button : React.FC<ButtonProp> = ({ style, text }) => {
+const Button: React.FC<ButtonProp> = ( { style, text } ) => {
 
     return (
         <>
-            <button className={`${style}`} >
-                {text}
-            </button>
+            <button className={`${style}`} >{text}</button>
         </>
     )
 }

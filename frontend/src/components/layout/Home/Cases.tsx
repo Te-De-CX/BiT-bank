@@ -58,8 +58,6 @@ const Cases = () => {
                     </button>
                 </div>
             </div>
-
-            {/* Business Section */}
             <div className="flex flex-col lg:flex-row-reverse gap-12">
                 <div className="lg:w-1/2 grid grid-cols-2 gap-6">
                     {cases.map(value => (

@@ -1,0 +1,133 @@
+# BANKING API DOCUMENTATION
+
+## AUTHENTICATION
+POST /api/auth/register/ - Register new user
+  Required fields: username, password, email, phone_number, first_name, last_name, is_customer
+
+POST /api/auth/login/ - User login
+  Required fields: username, password
+  Returns: access_token, refresh_token
+
+POST /api/auth/token/refresh/ - Refresh access token
+  Required field: refresh_token
+
+## ACCOUNTS
+GET /api/accounts/accounts/ - List all user accounts
+POST /api/accounts/accounts/ - Create new account
+  Required field: account_type (SAVINGS|CURRENT|FIXED_DEPOSIT)
+
+GET /api/accounts/accounts/{id}/ - Get account details
+
+GET /api/accounts/beneficiaries/ - List beneficiaries
+POST /api/accounts/beneficiaries/ - Add beneficiary
+  Required fields: account, nickname
+
+DELETE /api/accounts/beneficiaries/{id}/ - Remove beneficiary
+
+## TRANSACTIONS
+GET /api/transactions/accounts/{id}/transactions/ - Get transaction history
+GET /api/transactions/transactions/{id}/ - Get transaction details
+
+POST /api/transactions/transfer/ - Transfer funds
+  Required fields: from_account, to_account, amount
+  Optional field: description
+
+## LOANS
+GET /api/loans/ - List all loans
+POST /api/loans/ - Apply for loan
+  Required fields: account, loan_type, amount, interest_rate, term_months, start_date
+  Optional field: purpose
+
+GET /api/loans/{id}/ - Get loan details
+GET /api/loans/{id}/payments/ - Get loan payments
+POST /api/loans/{id}/payments/ - Make payment
+  Required field: amount
+
+## CARDS
+GET /api/cards/ - List all cards
+POST /api/cards/ - Request new card
+  Required fields: account, card_type (DEBIT|CREDIT)
+
+GET /api/cards/{id}/ - Get card details
+PATCH /api/cards/{id}/ - Update card status
+  Required field: status (ACTIVE|INACTIVE|LOST|STOLEN|EXPIRED)
+DELETE /api/cards/{id}/ - Cancel card
+
+## SAVINGS ACCOUNTS
+POST /api/savings/savings-accounts/ - Create savings account
+  Required: account_id, account_type (REGULAR|HIGH_YIELD|CERTIFICATE), interest_rate
+  Returns: Savings account details
+
+GET /api/savings/savings-accounts/ - List user's savings accounts
+GET /api/savings/savings-accounts/<id>/calculate-interest/ - Calculate projected interest
+
+## REWARDS PROGRAM
+GET /api/savings/rewards/ - List available rewards
+  Returns: List of active rewards with point values
+
+GET /api/savings/user-rewards/ - Get user's reward balances
+POST /api/savings/rewards/redeem/ - Redeem reward points
+  Required: reward_id, points_to_redeem
+
+## COMPETITIONS
+GET /api/savings/competitions/ - List active competitions
+  Returns: Competitions with prize info and dates
+
+POST /api/savings/competitions/join/ - Join competition
+  Required: competition_id, savings_account_id
+
+## FRONTEND HOOKS
+Authentication:
+- useLogin()
+- useRegister() 
+- useLogout()
+- useUserProfile()
+
+Accounts:
+- useAccounts()
+- useCreateAccount()
+- useBeneficiaries()
+
+Transactions:  
+- useAccountTransactions()
+- useTransfer()
+
+Loans:
+- useLoans()
+- useCreateLoan()
+- useMakeLoanPayment()
+
+Cards:
+- useCards()
+- useCreateCard()
+- useUpdateCardStatus()
+
+## DEVELOPMENT NOTES
+1. All financial transactions are atomic
+2. JWT tokens expire after 60 minutes
+3. Always check balances before transfers
+4. Use proper error handling for failed transactions
+5. Test thoroughly before production deployment
+
+
+## USE CASE SCENARIOS
+
+1. Savings Account Opening Flow:
+   - User selects account type
+   - useCreateSavingsAccount() submits
+   - On success, redirect to new account view
+
+2. Reward Redemption:
+   - User selects reward
+   - useRedeemReward() submits request
+   - Show confirmation modal on success
+
+3. Competition Participation:
+   - User views active competitions (useActiveCompetitions)
+   - Clicks "Join" (useJoinCompetition)
+   - Gets added to leaderboard
+
+4. Interest Calculator:
+   - User inputs amount
+   - useCalculateInterest() fetches projection
+   - Results displayed in chart

@@ -11,10 +11,19 @@ from .serializers import CustomTokenObtainPairSerializer
 
 User = get_user_model()
 
-class UserRegistrationView(generics.CreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+class UserRegistrationView(APIView):
     permission_classes = [permissions.AllowAny]
+    authentication_classes = []
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            # Make sure to call save()!
+            user = serializer.save()
+            return Response(
+                {"message": "User registered successfully"}, 
+                status=status.HTTP_201_CREATED
+            )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer

@@ -5,18 +5,38 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 User = get_user_model()
 
+# accounts/serializers.py
+from rest_framework import serializers
+from django.contrib.auth import get_user_model
+from django.db import transaction
+
+User = get_user_model()
+
 class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'phone_number', 'first_name', 'last_name', 'is_customer', 'is_staff']
-        extra_kwargs = {'password': {'write_only': True}}
-    
+        fields = ['username', 'password', 'email', 'phone_number', 'first_name', 'last_name', 'is_customer']
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
+
     def create(self, validated_data):
-        password = validated_data.pop('password')
-        user = User(**validated_data)
-        user.set_password(password)
-        user.save()
-        return user
+        try:
+            with transaction.atomic():
+                user = User.objects.create_user(
+                    username=validated_data['username'],
+                    password=validated_data['password'],
+                    email=validated_data.get('email', ''),
+                    phone_number=validated_data.get('phone_number', ''),
+                    first_name=validated_data.get('first_name', ''),
+                    last_name=validated_data.get('last_name', ''),
+                    is_customer=validated_data.get('is_customer', True)
+                )
+                return user
+        except Exception as e:
+            raise serializers.ValidationError(str(e))
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod

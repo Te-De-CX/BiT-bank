@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import apiClient from '../../lib/api/apiClient';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation'; // Changed from 'next/router'
 import { ApiError, UserProfile } from '../types/api';
 
 interface LoginData {
@@ -12,10 +12,10 @@ interface RegisterData {
   username: string;
   password: string;
   email: string;
-  phone_number: string;
-  first_name: string;
-  last_name: string;
-  is_customer: boolean;
+  phone_number?: string;
+  first_name?: string;
+  last_name?: string;
+  is_customer?: boolean;
 }
 
 interface LoginResponse {
@@ -36,6 +36,9 @@ export const useLogin = () => {
       localStorage.setItem('refresh_token', data.refresh);
       router.push('/dashboard');
     },
+    onError: (error) => {
+      console.error('Login error:', error);
+    }
   });
 };
 
@@ -43,12 +46,17 @@ export const useRegister = () => {
   const router = useRouter();
   
   return useMutation<void, ApiError, RegisterData>({
-    mutationFn: async (data) => {
-      await apiClient.post('/auth/register/', data);
+    mutationFn: async (data: RegisterData) => {
+      const response = await apiClient.post('/auth/register/', data);
+      return response.data;
     },
     onSuccess: () => {
       router.push('/login');
     },
+    onError: (error: ApiError) => {
+      console.error('Registration error:', error);
+      // You might want to return the error here or handle it differently
+    }
   });
 };
 
@@ -72,10 +80,9 @@ export const useUserProfile = () => {
       return response.data;
     },
     retry: (failureCount, error) => {
-      // Don't retry on 401 errors
       if (error.status === 401) return false;
       return failureCount < 3;
     },
-    staleTime: 1000 * 60 * 5, // 5 minutes
+    staleTime: 1000 * 60 * 5,
   });
 };

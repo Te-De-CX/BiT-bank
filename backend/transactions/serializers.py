@@ -26,7 +26,8 @@ class TransactionSerializer(serializers.ModelSerializer):
 class TransferSerializer(serializers.Serializer):
     from_account = serializers.CharField()
     to_account = serializers.CharField()
-    amount = serializers.DecimalField(max_digits=15, decimal_places=2, min_value=0.01)
+    # amount = serializers.DecimalField(max_digits=15, decimal_places=2, min_value=1)
+    amount = serializers.IntegerField()
     description = serializers.CharField(required=False, allow_blank=True)
     
     def validate(self, data):

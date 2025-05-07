@@ -41,7 +41,7 @@ class Reward(models.Model):
     is_active = models.BooleanField(default=True)
 
 class UserReward(models.Model):
-    user = models.ForeignKey('accounts.User', on_delete=models.CASCADE, related_name='rewards')
+    user = models.ForeignKey('accounts.CustomUser', on_delete=models.CASCADE, related_name='rewards')
     reward = models.ForeignKey(Reward, on_delete=models.CASCADE)
     points_balance = models.DecimalField(max_digits=15, decimal_places=2, default=0)
     last_updated = models.DateTimeField(auto_now=True)
@@ -58,7 +58,7 @@ class Competition(models.Model):
 
 class CompetitionParticipant(models.Model):
     competition = models.ForeignKey(Competition, on_delete=models.CASCADE, related_name='participants')
-    user = models.ForeignKey('accounts.User', on_delete=models.CASCADE)
+    user = models.ForeignKey('accounts.CustomUser', on_delete=models.CASCADE)
     joined_at = models.DateTimeField(auto_now_add=True)
     current_savings = models.DecimalField(max_digits=15, decimal_places=2, default=0)
     is_winner = models.BooleanField(default=False)

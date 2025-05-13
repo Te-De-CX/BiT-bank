@@ -3,11 +3,16 @@ import apiClient from '../api/apiClient';
 import { Account, AccountData, Beneficiary, BeneficiaryData } from '../types/accounts';
 import { ApiError } from '../types/api';
 
+export interface AccountsResponse {
+  accounts?: Account[];
+  // Add other response metadata if needed
+}
+
 export const useAccounts = () => {
-  return useQuery<Account[], ApiError>({
+  return useQuery<AccountsResponse, ApiError>({
     queryKey: ['accounts'],
     queryFn: async () => {
-      const response = await apiClient.get<Account[]>('/accounts/accounts/');
+      const response = await apiClient.get<AccountsResponse>('/accounts/accounts/');
       return response.data;
     },
     staleTime: 1000 * 60 * 5, // 5 minutes

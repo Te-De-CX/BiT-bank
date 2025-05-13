@@ -8,7 +8,7 @@ import { useLogin } from '@/lib/hooks/useAuth'
 
 export default function LoginForm() {
   // const router = useRouter()
-  const [email, setEmail] = useState('')
+  const [username, setusername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   
@@ -17,7 +17,7 @@ export default function LoginForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
-    login({ username: email, password })
+    login({ username: username, password })
   }
 
   return (
@@ -40,14 +40,15 @@ export default function LoginForm() {
         )}
 
         <InputField
-          label="Email address"
-          id="email"
-          name="email"
-          type="email"
-          autoComplete="email"
+          label="username address"
+          id="username"
+          name="username"
+          type="username"
+          autoComplete="username"
+          className='text-black '
           required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={username}
+          onChange={(e) => setusername(e.target.value)}
           disabled={isLoading}
         />
 
@@ -57,6 +58,7 @@ export default function LoginForm() {
           name="password"
           type="password"
           autoComplete="current-password"
+          className='text-black '
           required
           value={password}
           onChange={(e) => setPassword(e.target.value)}

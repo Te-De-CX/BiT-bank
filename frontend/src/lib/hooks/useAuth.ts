@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import apiClient from '../../lib/api/apiClient';
 import { useRouter } from 'next/navigation'; // Changed from 'next/router'
 import { ApiError, UserProfile } from '../types/api';
+// import { jwtDecode } from 'jwt-decode';
 
 interface LoginData {
   username: string;
@@ -76,7 +77,7 @@ export const useUserProfile = () => {
   return useQuery<UserProfile, ApiError>({
     queryKey: ['userProfile'],
     queryFn: async () => {
-      const response = await apiClient.get<UserProfile>('/accounts/profile/');
+      const response = await apiClient.get<UserProfile>(`/accounts/profile/`);
       return response.data;
     },
     retry: (failureCount, error) => {

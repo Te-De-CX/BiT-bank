@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import apiClient from '../api/apiClient';
 import { Account, AccountData, Beneficiary, BeneficiaryData } from '../types/accounts';
 import { ApiError } from '../types/api';
+import { AccountsApiResponse } from '../types/accounts';
 
 export interface AccountsResponse {
   accounts?: Account[];
@@ -9,10 +10,10 @@ export interface AccountsResponse {
 }
 
 export const useAccounts = () => {
-  return useQuery<AccountsResponse, ApiError>({
+  return useQuery<AccountsApiResponse, ApiError>({
     queryKey: ['accounts'],
     queryFn: async () => {
-      const response = await apiClient.get<AccountsResponse>('/accounts/accounts/');
+      const response = await apiClient.get<AccountsApiResponse>('/accounts/accounts/');
       return response.data;
     },
     staleTime: 1000 * 60 * 5, // 5 minutes

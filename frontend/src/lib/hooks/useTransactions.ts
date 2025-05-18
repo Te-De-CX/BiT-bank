@@ -2,16 +2,28 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import apiClient from '../api/apiClient';
 import { Transaction, TransactionResponse, TransferData } from '../types/transactions';
 import { ApiError } from '../types/api';
+import { TransactionsApiResponse } from '../types/transactions';
 
 export const useAccountTransactions = (accountId: number) => {
-  return useQuery<Transaction[], ApiError>({
+  return useQuery<TransactionsApiResponse, ApiError>({
     queryKey: ['transactions', accountId],
     queryFn: async () => {
-      const response = await apiClient.get<Transaction[]>(`/transactions/accounts/${accountId}/transactions/`);
+      const response = await apiClient.get<TransactionsApiResponse>(
+        `/transactions/accounts/${accountId}/transactions/`
+      );
       return response.data;
     },
-    enabled: !!accountId, // Only run query if accountId exists
-    staleTime: 1000 * 60, // 1 minute stale time for transactions
+    select: (data) => ({
+      ...data,
+      results: data.results.map(transaction => ({
+        ...transaction,
+        // Convert string amounts to numbers if needed
+        amount: transaction.amount,
+        // Add any other transformations here
+      })),
+    }),
+    enabled: !!accountId,
+    staleTime: 1000 * 60,
   });
 };
 

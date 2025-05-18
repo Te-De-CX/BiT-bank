@@ -1,8 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import apiClient from '../../lib/api/apiClient';
-import { useRouter } from 'next/navigation'; // Changed from 'next/router'
+import { useRouter } from 'next/navigation';
 import { ApiError, UserProfile } from '../types/api';
-// import { jwtDecode } from 'jwt-decode';
 
 interface LoginData {
   username: string;

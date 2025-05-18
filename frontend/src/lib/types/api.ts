@@ -3,6 +3,7 @@ export interface ApiError {
     message: string;
     status?: number;
     data?: string;
+    response?: string;
   }
   
   export interface UserProfile {

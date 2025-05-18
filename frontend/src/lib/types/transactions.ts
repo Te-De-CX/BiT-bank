@@ -14,6 +14,14 @@ export interface Transaction {
   recipient_account?: number;
 }
 
+export interface TransactionsApiResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Transaction[];
+}
+
+
 export interface TransferData {
   from_account: string;
   to_account: string;

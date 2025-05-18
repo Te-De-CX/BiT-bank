@@ -1,13 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import apiClient from '../api/apiClient';
-import { Card, CardData, UpdateCardStatusData } from '../types/cards';
+import { Card, CardsResponse, CardData, UpdateCardStatusData } from '../types/cards';
 import { ApiError } from '../types/api';
 
 export const useCards = () => {
-  return useQuery<Card[], ApiError>({
+  return useQuery<CardsResponse, ApiError>({
     queryKey: ['cards'],
     queryFn: async () => {
-      const response = await apiClient.get<Card[]>('/cards/');
+      const response = await apiClient.get<CardsResponse>('/cards/');
       return response.data;
     },
     staleTime: 1000 * 60 * 5, // 5 minutes
@@ -26,16 +26,14 @@ export const useCardDetails = (cardId: number) => {
 };
 
 export const useCreateCard = () => {
-  const queryClient = useQueryClient();
-  
   return useMutation<Card, ApiError, CardData>({
-    mutationFn: async (data) => {
-      const response = await apiClient.post<Card>('/cards/', data);
+    mutationFn: async (cardData) => {
+      const response = await apiClient.post('/cards/', {
+        account: cardData.account.toString(), // Ensure account is sent as string
+        card_type: cardData.card_type
+      });
       return response.data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['cards'] });
-    },
+    }
   });
 };
 
